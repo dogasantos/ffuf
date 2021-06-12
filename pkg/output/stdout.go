@@ -80,7 +80,7 @@ func (s *Stdoutput) Banner() {
 
 		if s.config.OutputFormat == "all" {
 			// Actually... append all extensions
-			OutputFile += ".{json,ejson,html,md,csv,ecsv}"
+			OutputFile += ".{plain,json,ejson,html,md,csv,ecsv}"
 		}
 
 		printOption([]byte("Output file"), []byte(OutputFile))
@@ -225,6 +225,12 @@ func (s *Stdoutput) writeToAll(filename string, config *ffuf.Config, res []ffuf.
 	// Go through each type of write, adding
 	// the suffix to each output file.
 
+	s.config.OutputFile = BaseFilename + ".txt"
+	err = writePlain(filename, s.config, res)
+	if err != nil {
+		s.Error(err.Error())
+	}
+
 	s.config.OutputFile = BaseFilename + ".json"
 	err = writeJSON(filename, s.config, res)
 	if err != nil {
@@ -275,6 +281,8 @@ func (s *Stdoutput) SaveFile(filename, format string) error {
 	switch format {
 	case "all":
 		err = s.writeToAll(filename, s.config, append(s.Results, s.CurrentResults...))
+	case "plain":
+		err = writePlain(filename, s.config, append(s.Results, s.CurrentResults...))
 	case "json":
 		err = writeJSON(filename, s.config, append(s.Results, s.CurrentResults...))
 	case "ejson":

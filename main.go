@@ -113,7 +113,7 @@ func ParseFlags(opts *ffuf.ConfigOptions) *ffuf.ConfigOptions {
 	flag.StringVar(&opts.Output.DebugLog, "debug-log", opts.Output.DebugLog, "Write all of the internal logging to the specified file.")
 	flag.StringVar(&opts.Output.OutputDirectory, "od", opts.Output.OutputDirectory, "Directory path to store matched results to.")
 	flag.StringVar(&opts.Output.OutputFile, "o", opts.Output.OutputFile, "Write output to file")
-	flag.StringVar(&opts.Output.OutputFormat, "of", opts.Output.OutputFormat, "Output file format. Available formats: json, ejson, html, md, csv, ecsv (or, 'all' for all formats)")
+	flag.StringVar(&opts.Output.OutputFormat, "of", opts.Output.OutputFormat, "Output file format. Available formats: plain, json, ejson, html, md, csv, ecsv (or, 'all' for all formats)")
 	flag.Var(&autocalibrationstrings, "acc", "Custom auto-calibration string. Can be used multiple times. Implies -ac")
 	flag.Var(&cookies, "b", "Cookie data `\"NAME1=VALUE1; NAME2=VALUE2\"` for copy as curl functionality.")
 	flag.Var(&cookies, "cookie", "Cookie data (alias of -b)")
@@ -137,6 +137,7 @@ func main() {
 
 	// prepare the default config options from default config file
 	var opts *ffuf.ConfigOptions
+	var progress = *ffuf.Progress
 	opts, optserr = ffuf.ReadDefaultConfig()
 
 	opts = ParseFlags(opts)
@@ -212,8 +213,11 @@ func main() {
 		}()
 	}
 
+
 	// Job handles waiting for goroutines to complete itself
 	job.Start()
+	log.Printf("Ended at position: [%d/%d]", progress.QueuePos , progress.ReqTotal)
+
 }
 
 func prepareJob(conf *ffuf.Config) (*ffuf.Job, error) {
