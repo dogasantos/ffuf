@@ -32,11 +32,13 @@ func writePlain(filename string, config *ffuf.Config, res []ffuf.Result) error {
 	}
 	defer f.Close()
 
+
 	writer := bufio.NewWriter(f)
-	for _, fh := range res {
-		_, _ = writer.WriteString(resultItem.Request.url + "\n")
+	for _, resItem := range res {
+		_, _ = writer.WriteString(resItem.Request.url + "\n")
 	}
 	writer.Flush()
+	
 
 	return err
 }
