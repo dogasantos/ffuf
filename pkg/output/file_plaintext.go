@@ -18,7 +18,7 @@ func writePlain(filename string, config *ffuf.Config, res []ffuf.Result) error {
 
 	writer := bufio.NewWriter(f)
 	for _, resItem := range res {
-		_, _ = writer.WriteString(resItem.Url+"\n",resItem.Url)
+		_, _ = writer.WriteString(resItem.Url+"\n")
 	}
 	writer.Flush()
 
