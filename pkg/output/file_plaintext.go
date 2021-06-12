@@ -26,7 +26,6 @@ ffuf.Result{
 */
 func writePlain(filename string, config *ffuf.Config, res []ffuf.Result) error {
 
-	 
 	f, err := os.Create(filename)
 	if err != nil {
 		return err
