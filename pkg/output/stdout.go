@@ -308,6 +308,7 @@ func (s *Stdoutput) Finalize() error {
 			s.Error(err.Error())
 		}
 	}
+	
 	fmt.Fprintf(os.Stderr, "\n")
 	return nil
 }

@@ -137,7 +137,6 @@ func main() {
 
 	// prepare the default config options from default config file
 	var opts *ffuf.ConfigOptions
-	var progress *ffuf.Progress
 	opts, optserr = ffuf.ReadDefaultConfig()
 
 	opts = ParseFlags(opts)
@@ -216,7 +215,6 @@ func main() {
 
 	// Job handles waiting for goroutines to complete itself
 	job.Start()
-	log.Printf("Ended at position: [%d/%d]", progress.QueuePos , progress.ReqTotal)
 
 }
 
