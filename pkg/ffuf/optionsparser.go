@@ -335,7 +335,7 @@ func ConfigFromOptions(parseOpts *ConfigOptions, ctx context.Context, cancel con
 	//Check the output file format option
 	if parseOpts.Output.OutputFile != "" {
 		//No need to check / error out if output file isn't defined
-		outputFormats := []string{"all", "json", "ejson", "html", "md", "csv", "ecsv"}
+		outputFormats := []string{"all", "plain", "json", "ejson", "html", "md", "csv", "ecsv"}
 		found := false
 		for _, f := range outputFormats {
 			if f == parseOpts.Output.OutputFormat {
