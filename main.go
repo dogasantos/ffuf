@@ -137,7 +137,7 @@ func main() {
 
 	// prepare the default config options from default config file
 	var opts *ffuf.ConfigOptions
-	var progress = ffuf.Progress
+	var progress *ffuf.Progress
 	opts, optserr = ffuf.ReadDefaultConfig()
 
 	opts = ParseFlags(opts)
